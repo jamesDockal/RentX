@@ -16,6 +16,7 @@ import {
   Footer,
 } from "./styles";
 import { Button } from "../../components/Button";
+import { Calendar } from "../../components/Calendar";
 
 type Props = {};
 
@@ -53,7 +54,9 @@ export const Scheduling: React.FC<Props> = ({}) => {
         </RentalPeriod>
       </Header>
 
-      <Content></Content>
+      <Content>
+        <Calendar />
+      </Content>
 
       <Footer>
         <Button name="Confirmar" />
