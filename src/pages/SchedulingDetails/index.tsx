@@ -112,7 +112,7 @@ export const SchedulingDetails: React.FC<Props> = ({}) => {
         <RentalPrice>
           <RentalPriceLabel>TOTAL</RentalPriceLabel>
           <RentalPriceDetails>
-            <RentalPriceQuota>R$ 580 x3 diároas</RentalPriceQuota>
+            <RentalPriceQuota>R$ 580 x3 diárias</RentalPriceQuota>
             <RentalPriceTotal>R$ 2.900</RentalPriceTotal>
           </RentalPriceDetails>
         </RentalPrice>

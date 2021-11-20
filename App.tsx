@@ -22,6 +22,7 @@ import theme from "./src/styles/theme";
 
 import AppLoading from "expo-app-loading";
 import { SchedulingDetails } from "./src/pages/SchedulingDetails";
+import { SchedulingComplete } from "./src/pages/SchedulingComplete";
 
 export default function App() {
   const [isFontLoaded] = useFonts({
@@ -42,7 +43,8 @@ export default function App() {
       {/* <Home /> */}
       {/* <CarDetails /> */}
       {/* <Scheduling /> */}
-      <SchedulingDetails />
+      {/* <SchedulingDetails /> */}
+      <SchedulingComplete />
     </ThemeProvider>
   );
 }

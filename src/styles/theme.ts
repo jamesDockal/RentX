@@ -13,7 +13,7 @@ export default {
 
     main: "#dc1637",
     main_light: "#fdedef",
-    success: "#03bs52",
+    success: "#008B4F",
 
     shape: "#e1e1e8",
     shape_dark: "#29292e",
