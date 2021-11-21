@@ -17,18 +17,10 @@ import {
 } from "./styles";
 import { RectButtonProps } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/core";
+import { Car } from "../../@types/Cars";
 
 interface Props extends RectButtonProps {
-  car: {
-    type: "electric" | "gasoline";
-    name: string;
-    brand: string;
-    thumbnail: string;
-    rent: {
-      price: number;
-      period: string;
-    };
-  };
+  car: Car;
 }
 
 export const CardCard: React.FC<Props> = ({ car }) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "react-native";
 
 import {
@@ -11,13 +11,15 @@ import {
 import Logo from "../../assets/logo.svg";
 import { RFValue } from "react-native-responsive-fontsize";
 import { CardCard } from "../../components/CardCard";
+import { api } from "../../services/api";
+import { Load } from "../../components/Load";
 
 type Props = {};
 
 type Car = {
   name: string;
   brand: string;
-  type: "electric" | "gasoline";
+  fuel_type: "electric" | "gasoline";
   thumbnail: string;
   rent: {
     price: number;
@@ -26,140 +28,18 @@ type Car = {
 };
 
 export const Home: React.FC<Props> = ({}) => {
-  const cars: Car[] = [
-    {
-      brand: "AUDI",
-      name: "RS 5 Coupé",
-      type: "gasoline",
-      thumbnail:
-        "https://img2.gratispng.com/20180816/paa/kisspng-ferrari-s-p-a-car-ferrari-488-enzo-ferrari-ferrari-png-free-png-images-toppng-5b75fbb0461eb8.4406679715344588002872.jpg",
-      rent: {
-        period: "Ao dia",
-        price: 120,
-      },
-    },
-    {
-      brand: "tesla",
-      name: "Model X",
-      type: "electric",
-      thumbnail:
-        "https://toppng.com/uploads/preview/tesla-model-x-11562971244z3uhlgfqpe.png",
-      rent: {
-        period: "Ao dia",
-        price: 150,
-      },
-    },
-    {
-      brand: "AUDI",
-      name: "RS 5 Coupé",
-      type: "gasoline",
-      thumbnail:
-        "https://img2.gratispng.com/20180816/paa/kisspng-ferrari-s-p-a-car-ferrari-488-enzo-ferrari-ferrari-png-free-png-images-toppng-5b75fbb0461eb8.4406679715344588002872.jpg",
-      rent: {
-        period: "Ao dia",
-        price: 120,
-      },
-    },
-    {
-      brand: "tesla",
-      name: "Model X",
-      type: "electric",
-      thumbnail:
-        "https://toppng.com/uploads/preview/tesla-model-x-11562971244z3uhlgfqpe.png",
-      rent: {
-        period: "Ao dia",
-        price: 150,
-      },
-    },
-    {
-      brand: "AUDI",
-      name: "RS 5 Coupé",
-      type: "gasoline",
-      thumbnail:
-        "https://img2.gratispng.com/20180816/paa/kisspng-ferrari-s-p-a-car-ferrari-488-enzo-ferrari-ferrari-png-free-png-images-toppng-5b75fbb0461eb8.4406679715344588002872.jpg",
-      rent: {
-        period: "Ao dia",
-        price: 120,
-      },
-    },
-    {
-      brand: "tesla",
-      name: "Model X",
-      type: "electric",
-      thumbnail:
-        "https://toppng.com/uploads/preview/tesla-model-x-11562971244z3uhlgfqpe.png",
-      rent: {
-        period: "Ao dia",
-        price: 150,
-      },
-    },
-    {
-      brand: "AUDI",
-      name: "RS 5 Coupé",
-      type: "gasoline",
-      thumbnail:
-        "https://img2.gratispng.com/20180816/paa/kisspng-ferrari-s-p-a-car-ferrari-488-enzo-ferrari-ferrari-png-free-png-images-toppng-5b75fbb0461eb8.4406679715344588002872.jpg",
-      rent: {
-        period: "Ao dia",
-        price: 120,
-      },
-    },
-    {
-      brand: "tesla",
-      name: "Model X",
-      type: "electric",
-      thumbnail:
-        "https://toppng.com/uploads/preview/tesla-model-x-11562971244z3uhlgfqpe.png",
-      rent: {
-        period: "Ao dia",
-        price: 150,
-      },
-    },
-    {
-      brand: "AUDI",
-      name: "RS 5 Coupé",
-      type: "gasoline",
-      thumbnail:
-        "https://img2.gratispng.com/20180816/paa/kisspng-ferrari-s-p-a-car-ferrari-488-enzo-ferrari-ferrari-png-free-png-images-toppng-5b75fbb0461eb8.4406679715344588002872.jpg",
-      rent: {
-        period: "Ao dia",
-        price: 120,
-      },
-    },
-    {
-      brand: "tesla",
-      name: "Model X",
-      type: "electric",
-      thumbnail:
-        "https://toppng.com/uploads/preview/tesla-model-x-11562971244z3uhlgfqpe.png",
-      rent: {
-        period: "Ao dia",
-        price: 150,
-      },
-    },
-    {
-      brand: "AUDI",
-      name: "RS 5 Coupé",
-      type: "gasoline",
-      thumbnail:
-        "https://img2.gratispng.com/20180816/paa/kisspng-ferrari-s-p-a-car-ferrari-488-enzo-ferrari-ferrari-png-free-png-images-toppng-5b75fbb0461eb8.4406679715344588002872.jpg",
-      rent: {
-        period: "Ao dia",
-        price: 120,
-      },
-    },
-    {
-      brand: "tesla",
-      name: "Model X",
-      type: "electric",
-      thumbnail:
-        "https://toppng.com/uploads/preview/tesla-model-x-11562971244z3uhlgfqpe.png",
-      rent: {
-        period: "Ao dia",
-        price: 150,
-      },
-    },
-  ];
+  const [cars, setCars] = useState<Car[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    try {
+      api.get("/cars").then((response) => {
+        setCars(response.data);
+        setIsLoading(false);
+      });
+    } catch (error) {
+      console.log("error", error?.response?.data);
+    }
+  }, []);
 
   return (
     <Container>
@@ -176,11 +56,15 @@ export const Home: React.FC<Props> = ({}) => {
         </HeaderContainer>
       </Header>
 
-      <CarList
-        keyExtractor={(item: any) => item.name}
-        data={cars}
-        renderItem={({ item }: any) => <CardCard car={item} />}
-      ></CarList>
+      {isLoading ? (
+        <Load />
+      ) : (
+        <CarList
+          data={cars}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <CardCard car={item} />}
+        />
+      )}
     </Container>
   );
 };

@@ -49,7 +49,6 @@ export const SchedulingDetails: React.FC<Props> = ({}) => {
   const theme = useTheme();
 
   const navigation = useNavigation();
-
   function handleConfirm() {
     navigation.navigate("SchedulingComplete");
   }
