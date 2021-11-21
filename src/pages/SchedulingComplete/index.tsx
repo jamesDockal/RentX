@@ -8,11 +8,17 @@ import DoneSvg from "../../assets/done.svg";
 import { Container, Content, Title, Message, Footer } from "./styles";
 import { ConfirmationButton } from "../../components/ConfirmationButton";
 import { StatusBar } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 
 type Props = {};
 
 export const SchedulingComplete: React.FC<Props> = ({}) => {
   const { width } = useWindowDimensions();
+
+  const navigation = useNavigation();
+  function handleConfirm() {
+    navigation.navigate("Home");
+  }
 
   return (
     <Container>
@@ -36,7 +42,7 @@ export const SchedulingComplete: React.FC<Props> = ({}) => {
       </Content>
 
       <Footer>
-        <ConfirmationButton title="OK" />
+        <ConfirmationButton title="OK" onPress={handleConfirm} />
       </Footer>
     </Container>
   );

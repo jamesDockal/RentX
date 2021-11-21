@@ -177,7 +177,7 @@ export const Home: React.FC<Props> = ({}) => {
       </Header>
 
       <CarList
-        keyExtractor={({ item }: any) => item.name}
+        keyExtractor={(item: any) => item.name}
         data={cars}
         renderItem={({ item }: any) => <CardCard car={item} />}
       ></CarList>

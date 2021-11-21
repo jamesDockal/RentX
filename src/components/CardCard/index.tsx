@@ -15,8 +15,10 @@ import {
   Type,
   CardImage,
 } from "./styles";
+import { RectButtonProps } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/core";
 
-type Props = {
+interface Props extends RectButtonProps {
   car: {
     type: "electric" | "gasoline";
     name: string;
@@ -27,11 +29,16 @@ type Props = {
       period: string;
     };
   };
-};
+}
 
 export const CardCard: React.FC<Props> = ({ car }) => {
+  const navigation = useNavigation();
+  function handlePress() {
+    navigation.navigate("CarDetails");
+  }
+
   return (
-    <Container>
+    <Container onPress={handlePress}>
       <CarInfo>
         <Brand>{car.brand}</Brand>
         <Name>{car.name}</Name>

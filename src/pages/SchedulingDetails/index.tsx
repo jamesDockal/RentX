@@ -41,11 +41,18 @@ import PeopleSvg from "../../assets/people.svg";
 import { Button } from "../../components/Button";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useTheme } from "styled-components/native";
+import { useNavigation } from "@react-navigation/core";
 
 type Props = {};
 
 export const SchedulingDetails: React.FC<Props> = ({}) => {
   const theme = useTheme();
+
+  const navigation = useNavigation();
+
+  function handleConfirm() {
+    navigation.navigate("SchedulingComplete");
+  }
 
   return (
     <Container>
@@ -119,7 +126,7 @@ export const SchedulingDetails: React.FC<Props> = ({}) => {
       </Content>
 
       <Footer>
-        <Button name="Confirmar" />
+        <Button name="Confirmar" onPress={handleConfirm} />
       </Footer>
     </Container>
   );

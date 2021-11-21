@@ -8,9 +8,9 @@ interface Props extends RectButtonProps {
   color?: string;
 }
 
-export const Button: React.FC<Props> = ({ name, color }) => {
+export const Button: React.FC<Props> = ({ name, color, ...rest }) => {
   return (
-    <Container color={color}>
+    <Container color={color} {...rest}>
       <Title>{name}</Title>
     </Container>
   );

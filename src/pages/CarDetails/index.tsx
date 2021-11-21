@@ -27,10 +27,17 @@ import GasolineSvg from "../../assets/gasoline.svg";
 import ExchangeSvg from "../../assets/exchange.svg";
 import PeopleSvg from "../../assets/people.svg";
 import { Button } from "../../components/Button";
+import { useNavigation } from "@react-navigation/core";
 
 type Props = {};
 
 export const CarDetails: React.FC<Props> = ({}) => {
+  const navigation = useNavigation();
+
+  function handleSelectRentalPeriod() {
+    navigation.navigate("SchedulingComplete");
+  }
+
   return (
     <Container>
       <Header>
@@ -75,7 +82,7 @@ export const CarDetails: React.FC<Props> = ({}) => {
       </Content>
 
       <Footer>
-        <Button name="Confirmar" />
+        <Button name="Selecionar Periodo" onPress={handleSelectRentalPeriod} />
       </Footer>
     </Container>
   );

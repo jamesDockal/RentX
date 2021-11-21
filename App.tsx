@@ -14,15 +14,10 @@ import {
 
 import { ThemeProvider } from "styled-components/native";
 
-import { Home } from "./src/pages/Home";
-import { CarDetails } from "./src/pages/CarDetails";
-import { Scheduling } from "./src/pages/Scheduling";
-
 import theme from "./src/styles/theme";
 
 import AppLoading from "expo-app-loading";
-import { SchedulingDetails } from "./src/pages/SchedulingDetails";
-import { SchedulingComplete } from "./src/pages/SchedulingComplete";
+import { Routes } from "./src/routes";
 
 export default function App() {
   const [isFontLoaded] = useFonts({
@@ -40,11 +35,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* <Home /> */}
-      {/* <CarDetails /> */}
-      {/* <Scheduling /> */}
-      {/* <SchedulingDetails /> */}
-      <SchedulingComplete />
+      <Routes />
     </ThemeProvider>
   );
 }

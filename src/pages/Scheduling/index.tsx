@@ -17,11 +17,18 @@ import {
 } from "./styles";
 import { Button } from "../../components/Button";
 import { Calendar } from "../../components/Calendar";
+import { useNavigation } from "@react-navigation/core";
 
 type Props = {};
 
 export const Scheduling: React.FC<Props> = ({}) => {
   const theme = useTheme();
+
+  const navigation = useNavigation();
+
+  function handleConfirm() {
+    navigation.navigate("SchedulingDetails");
+  }
 
   return (
     <Container>
@@ -59,7 +66,7 @@ export const Scheduling: React.FC<Props> = ({}) => {
       </Content>
 
       <Footer>
-        <Button name="Confirmar" />
+        <Button name="Confirmar" onPress={handleConfirm} />
       </Footer>
     </Container>
   );
