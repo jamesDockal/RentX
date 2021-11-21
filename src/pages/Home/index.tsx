@@ -30,6 +30,7 @@ type Car = {
 export const Home: React.FC<Props> = ({}) => {
   const [cars, setCars] = useState<Car[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     try {
       api.get("/cars").then((response) => {

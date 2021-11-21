@@ -16,23 +16,23 @@ import {
   Period,
   Price,
   About,
-  AcessoriesWrapper,
+  AccessoriesWrapper,
   Footer,
 } from "./styles";
 
-import SpeedSvg from "../../assets/speed.svg";
-import AccelerationSvg from "../../assets/acceleration.svg";
-import ForceSvg from "../../assets/force.svg";
-import GasolineSvg from "../../assets/gasoline.svg";
-import ExchangeSvg from "../../assets/exchange.svg";
-import PeopleSvg from "../../assets/people.svg";
 import { Button } from "../../components/Button";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useRoute } from "@react-navigation/core";
+import { Car } from "../../@types/Cars";
+import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 
-type Props = {};
+type Params = {
+  car: Car;
+};
 
-export const CarDetails: React.FC<Props> = ({}) => {
+export const CarDetails: React.FC = ({}) => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { car } = route.params as Params;
 
   function handleSelectRentalPeriod() {
     navigation.navigate("SchedulingComplete");
@@ -41,44 +41,42 @@ export const CarDetails: React.FC<Props> = ({}) => {
   return (
     <Container>
       <Header>
-        <BackButton onPress={() => {}} />
+        <BackButton />
       </Header>
 
       <ImageContainer>
-        <ImagesSlider
-          imageUrl={[
-            "https://img2.gratispng.com/20180816/paa/kisspng-ferrari-s-p-a-car-ferrari-488-enzo-ferrari-ferrari-png-free-png-images-toppng-5b75fbb0461eb8.4406679715344588002872.jpg",
-          ]}
-        />
+        <ImagesSlider imageUrl={car.photos} />
       </ImageContainer>
 
       <Content>
         <Details>
           <Description>
-            <Brand>Lamborghini</Brand>
-            <Name>Hiracan</Name>
+            <Brand>{car.brand}</Brand>
+            <Name>{car.name}</Name>
           </Description>
 
           <Rent>
-            <Period>Ao dia</Period>
-            <Price>R$ 580</Price>
+            <Period>{car.rent.period}</Period>
+            <Price>R$ {car.rent.price}</Price>
           </Rent>
         </Details>
 
-        <AcessoriesWrapper>
-          <Accessory name="380Km/h" icon={SpeedSvg} />
+        <AccessoriesWrapper>
+          {/* <Accessory name="380Km/h" icon={SpeedSvg} />
           <Accessory name="3.2s" icon={AccelerationSvg} />
           <Accessory name="800 HP" icon={ForceSvg} />
           <Accessory name="Gasolina" icon={GasolineSvg} />
           <Accessory name="Auto" icon={ExchangeSvg} />
-          <Accessory name="2 Pessoas" icon={PeopleSvg} />
-        </AcessoriesWrapper>
-        <About>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda
-          adipisci accusamus ratione cum magnam cumque quasi quos dolor eveniet
-          animi maxime, sunt itaque et nostrum. Ut illo dolorem accusamus?
-          Recusandae!
-        </About>
+          <Accessory name="2 Pessoas" icon={PeopleSvg} /> */}
+          {car.accessories.map((accessory) => (
+            <Accessory
+              key={accessory.name}
+              name={accessory.name}
+              icon={getAccessoryIcon(accessory.type)}
+            />
+          ))}
+        </AccessoriesWrapper>
+        <About>{car.about}</About>
       </Content>
 
       <Footer>

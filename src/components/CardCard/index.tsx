@@ -1,8 +1,5 @@
 import React from "react";
 
-import GasolineSvg from "../../assets/gasoline.svg";
-import EnergySvg from "../../assets/energy.svg";
-
 import {
   Container,
   CarInfo,
@@ -18,6 +15,7 @@ import {
 import { RectButtonProps } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/core";
 import { Car } from "../../@types/Cars";
+import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
 
 interface Props extends RectButtonProps {
   car: Car;
@@ -26,9 +24,9 @@ interface Props extends RectButtonProps {
 export const CardCard: React.FC<Props> = ({ car }) => {
   const navigation = useNavigation();
   function handlePress() {
-    navigation.navigate("CarDetails");
+    navigation.navigate("CarDetails", { car });
   }
-
+  const MotorIcon = getAccessoryIcon(car.fuel_type);
   return (
     <Container onPress={handlePress}>
       <CarInfo>
@@ -38,10 +36,10 @@ export const CardCard: React.FC<Props> = ({ car }) => {
         <About>
           <Rent>
             <Period>{car.rent.period}</Period>
-            <Price>{`R$ ${car.rent.price}`}</Price>
+            <Price>R$ ${car.rent.price}</Price>
           </Rent>
           <Type>
-            {car.type === "gasoline" ? <GasolineSvg /> : <EnergySvg />}
+            <MotorIcon />
           </Type>
         </About>
       </CarInfo>
