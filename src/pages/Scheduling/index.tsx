@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "styled-components/native";
 
 import { StatusBar } from "react-native";
@@ -16,18 +16,40 @@ import {
   Footer,
 } from "./styles";
 import { Button } from "../../components/Button";
-import { Calendar } from "../../components/Calendar";
+import { Calendar, DayProps, MarkedDateProps } from "../../components/Calendar";
 import { useNavigation } from "@react-navigation/core";
+import { generateInterval } from "../../components/Calendar/generateInterval";
 
 type Props = {};
 
 export const Scheduling: React.FC<Props> = ({}) => {
+  const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>(
+    {} as DayProps
+  );
+  const [markedDates, setMarkedDates] = useState<MarkedDateProps>(
+    {} as MarkedDateProps
+  );
+
   const theme = useTheme();
 
   const navigation = useNavigation();
 
   function handleConfirm() {
     navigation.navigate("SchedulingDetails");
+  }
+
+  function handleChangeDate(date: DayProps) {
+    let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
+    let end = date;
+
+    if (start.timestamp > end.timestamp) {
+      start = end;
+      end = start;
+    }
+
+    setLastSelectedDate(end);
+    const interval = generateInterval(start, end);
+    setMarkedDates(interval);
   }
 
   return (
@@ -39,7 +61,7 @@ export const Scheduling: React.FC<Props> = ({}) => {
           backgroundColor="transparent"
         />
 
-        <BackButton onPress={() => {}} color={theme.colors.shape} />
+        <BackButton color={theme.colors.shape} />
         <Title>
           Escolha uma {"\n"}
           data de inicio e {"\n"}
@@ -48,7 +70,7 @@ export const Scheduling: React.FC<Props> = ({}) => {
 
         <RentalPeriod>
           <DateInfo>
-            <DateTitle>De</DateTitle>
+            <DateTitle>DE</DateTitle>
             <DateValue selected={false}>18/11/2021</DateValue>
           </DateInfo>
 
@@ -62,7 +84,7 @@ export const Scheduling: React.FC<Props> = ({}) => {
       </Header>
 
       <Content>
-        <Calendar />
+        <Calendar onDayPress={handleChangeDate} markedDates={markedDates} />
       </Content>
 
       <Footer>

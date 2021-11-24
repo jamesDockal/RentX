@@ -35,7 +35,7 @@ export const CarDetails: React.FC = ({}) => {
   const { car } = route.params as Params;
 
   function handleSelectRentalPeriod() {
-    navigation.navigate("SchedulingComplete");
+    navigation.navigate("Scheduling");
   }
 
   return (

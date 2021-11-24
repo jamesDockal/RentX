@@ -49,9 +49,9 @@ export const SchedulingDetails: React.FC<Props> = ({}) => {
   const theme = useTheme();
 
   const navigation = useNavigation();
-  function handleConfirm() {
-    navigation.navigate("SchedulingComplete");
-  }
+  // function handleConfirm() {
+  //   navigation.navigate("SchedulingComplete");
+  // }
 
   return (
     <Container>
@@ -125,7 +125,7 @@ export const SchedulingDetails: React.FC<Props> = ({}) => {
       </Content>
 
       <Footer>
-        <Button name="Confirmar" onPress={handleConfirm} />
+        {/* <Button name="Confirmar" onPress={handleConfirm} /> */}
       </Footer>
     </Container>
   );
