@@ -54,7 +54,7 @@ export const DateValue = styled.Text<DateValueProps>`
   font-size: ${RFValue(15)}px;
 
   ${({ theme, selected }) =>
-    selected &&
+    !selected &&
     css`
       border-bottom-width: 1px;
       border-bottom-color: ${theme.colors.text};

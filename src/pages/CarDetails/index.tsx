@@ -35,7 +35,9 @@ export const CarDetails: React.FC = ({}) => {
   const { car } = route.params as Params;
 
   function handleSelectRentalPeriod() {
-    navigation.navigate("Scheduling");
+    navigation.navigate("Scheduling", {
+      car,
+    });
   }
 
   return (
@@ -62,12 +64,6 @@ export const CarDetails: React.FC = ({}) => {
         </Details>
 
         <AccessoriesWrapper>
-          {/* <Accessory name="380Km/h" icon={SpeedSvg} />
-          <Accessory name="3.2s" icon={AccelerationSvg} />
-          <Accessory name="800 HP" icon={ForceSvg} />
-          <Accessory name="Gasolina" icon={GasolineSvg} />
-          <Accessory name="Auto" icon={ExchangeSvg} />
-          <Accessory name="2 Pessoas" icon={PeopleSvg} /> */}
           {car.accessories.map((accessory) => (
             <Accessory
               key={accessory.name}

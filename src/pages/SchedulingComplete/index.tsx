@@ -8,7 +8,12 @@ import DoneSvg from "../../assets/done.svg";
 import { Container, Content, Title, Message, Footer } from "./styles";
 import { ConfirmationButton } from "../../components/ConfirmationButton";
 import { StatusBar } from "react-native";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useRoute } from "@react-navigation/core";
+import { Car } from "../../@types/Cars";
+
+type Params = {
+  car: Car;
+};
 
 type Props = {};
 
@@ -16,6 +21,7 @@ export const SchedulingComplete: React.FC<Props> = ({}) => {
   const { width } = useWindowDimensions();
 
   const navigation = useNavigation();
+
   function handleConfirm() {
     navigation.navigate("Home");
   }

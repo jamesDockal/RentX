@@ -110,7 +110,7 @@ export const DateInfo = styled.View``;
 export const DateValue = styled.Text`
   font-family: ${({ theme }) => theme.fonts.primary_500};
   color: ${({ theme }) => theme.colors.title};
-  font-size: ${RFValue(10)}px;
+  font-size: ${RFValue(15)}px;
 `;
 
 export const DateTitle = styled.Text`
