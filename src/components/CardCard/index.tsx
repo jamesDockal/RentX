@@ -20,10 +20,10 @@ interface Props extends RectButtonProps {
   car: Car;
 }
 
-export const CardCard: React.FC<Props> = ({ car }) => {
-  const MotorIcon = getAccessoryIcon(car.fuel_type);
+export const CardCard: React.FC<Props> = ({ car, ...rest }) => {
+  const MotorIcon = getAccessoryIcon(car?.fuel_type);
   return (
-    <Container>
+    <Container {...rest}>
       <CarInfo>
         <Brand>{car.brand}</Brand>
         <Name>{car.name}</Name>
