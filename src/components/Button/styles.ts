@@ -4,14 +4,12 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 type Props = {
   color?: string;
-  isEnabled: boolean;
+  // isEnabled: boolean;
 };
 
 export const Container = styled(RectButton)<Props>`
   width: 100%;
   background-color: ${({ color, theme }) => color || theme.colors.main};
-
-  opacity: ${({ isEnabled }) => (isEnabled ? 1 : 0.5)}
 
   padding: 19px;
   align-items: center;

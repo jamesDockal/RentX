@@ -58,6 +58,8 @@ export const SchedulingDetails: React.FC<Props> = ({}) => {
   const [rentalPeriod, setRentalPeriod] = useState<IRentalPeriod>(
     {} as IRentalPeriod
   );
+  const [isLoading, setIsLoading] = useState(false);
+
   const theme = useTheme();
 
   const navigation = useNavigation();
@@ -67,6 +69,7 @@ export const SchedulingDetails: React.FC<Props> = ({}) => {
   const rentTotal = Number(dates.length * car.rent.price);
 
   async function handleConfirm() {
+    setIsLoading(true);
     const { data } = await api.get(`/schedules_bycars/${car.id}`);
     const unavailable_dates = [...data.unavailable_dates, ...dates];
 
@@ -89,8 +92,16 @@ export const SchedulingDetails: React.FC<Props> = ({}) => {
           "dd/MM/yyyy"
         ),
       })
-      .then(() => navigation.navigate("SchedulingComplete"))
-      .catch(() => Alert.alert("Não foi possivel confirmar o agendamemnto"));
+      .then(() => {
+        setIsLoading(false);
+
+        navigation.navigate("SchedulingComplete");
+      })
+      .catch(() => {
+        setIsLoading(false);
+
+        Alert.alert("Não foi possivel confirmar o agendamemnto");
+      });
   }
 
   useEffect(() => {
@@ -175,6 +186,8 @@ export const SchedulingDetails: React.FC<Props> = ({}) => {
           name="Confirmar"
           onPress={handleConfirm}
           color={theme.colors.success}
+          isEnabled={!isLoading}
+          isLoading={isLoading}
         />
       </Footer>
     </Container>
