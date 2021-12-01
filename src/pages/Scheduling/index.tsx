@@ -122,7 +122,11 @@ export const Scheduling: React.FC<Props> = ({}) => {
       </Content>
 
       <Footer>
-        <Button name="Confirmar" onPress={handleConfirm} />
+        <Button
+          name="Confirmar"
+          onPress={handleConfirm}
+          isEnabled={!!rentalPeriod.endFormatted}
+        />
       </Footer>
     </Container>
   );
