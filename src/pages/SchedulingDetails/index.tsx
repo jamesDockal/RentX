@@ -118,7 +118,7 @@ export const SchedulingDetails: React.FC<Props> = ({}) => {
       </Header>
 
       <ImageContainer>
-        <ImagesSlider imageUrl={car.photos} />
+        <ImagesSlider imagesUrl={car.photos} />
       </ImageContainer>
 
       <Content>

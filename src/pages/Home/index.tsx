@@ -59,7 +59,7 @@ export const Home: React.FC<Props> = ({}) => {
       <Header>
         <HeaderContainer>
           <Logo width={RFValue(108)} height={RFValue(12)} />
-          <TotalCars>Total de 12 Carros</TotalCars>
+          <TotalCars>Total de {cars.length} Carros</TotalCars>
         </HeaderContainer>
       </Header>
 

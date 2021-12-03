@@ -47,7 +47,7 @@ export const CarDetails: React.FC = ({}) => {
       </Header>
 
       <ImageContainer>
-        <ImagesSlider imageUrl={car.photos} />
+        <ImagesSlider imagesUrl={car.photos} />
       </ImageContainer>
 
       <Content>
