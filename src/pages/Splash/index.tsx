@@ -9,9 +9,11 @@ import Animated, {
   withTiming,
   interpolate,
   Extrapolate,
+  runOnJS,
 } from "react-native-reanimated";
 
 import { Container } from "./styles";
+import { useNavigation } from "@react-navigation/core";
 
 type Props = {};
 
@@ -50,8 +52,17 @@ export const Splash: React.FC<Props> = ({}) => {
     };
   });
 
+  const navigation = useNavigation();
+
+  function startApp() {
+    navigation.navigate("Home");
+  }
+
   useEffect(() => {
-    splashAnimation.value = withTiming(50, { duration: 1000 });
+    splashAnimation.value = withTiming(50, { duration: 1000 }, () => {
+      "worklet";
+      runOnJS(startApp)();
+    });
   }, []);
 
   return (
