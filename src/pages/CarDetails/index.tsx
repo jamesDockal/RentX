@@ -7,7 +7,6 @@ import {
   Container,
   Header,
   ImageContainer,
-  Content,
   Details,
   Description,
   Brand,
@@ -24,6 +23,14 @@ import { Button } from "../../components/Button";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { Car } from "../../@types/Cars";
 import { getAccessoryIcon } from "../../utils/getAccessoryIcon";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
+import { StatusBar } from "react-native";
 
 type Params = {
   car: Car;
@@ -34,6 +41,28 @@ export const CarDetails: React.FC = ({}) => {
   const route = useRoute();
   const { car } = route.params as Params;
 
+  const scrollY = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollY.value = event.contentOffset.y;
+  });
+
+  const headerStyleAnimation = useAnimatedStyle(() => {
+    return {
+      height: interpolate(
+        scrollY.value,
+        [0, 200],
+        [200, 70],
+        Extrapolate.CLAMP
+      ),
+    };
+  });
+
+  const sliderCarStyleAnimation = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(scrollY.value, [0, 150], [1, 0], Extrapolate.CLAMP),
+    };
+  });
+
   function handleSelectRentalPeriod() {
     navigation.navigate("Scheduling", {
       car,
@@ -42,15 +71,38 @@ export const CarDetails: React.FC = ({}) => {
 
   return (
     <Container>
-      <Header>
-        <BackButton />
-      </Header>
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"
+      />
 
-      <ImageContainer>
-        <ImagesSlider imagesUrl={car.photos} />
-      </ImageContainer>
+      <Animated.View style={[headerStyleAnimation]}>
+        <Header>
+          <BackButton />
+        </Header>
 
-      <Content>
+        <Animated.View
+          style={[
+            sliderCarStyleAnimation,
+            {
+              marginTop: 32,
+            },
+          ]}
+        >
+          <ImagesSlider imagesUrl={car.photos} />
+        </Animated.View>
+      </Animated.View>
+
+      <Animated.ScrollView
+        contentContainerStyle={{
+          padding: 24,
+          alignItems: "center",
+        }}
+        showsVerticalScrollIndicator={false}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+      >
         <Details>
           <Description>
             <Brand>{car.brand}</Brand>
@@ -72,8 +124,15 @@ export const CarDetails: React.FC = ({}) => {
             />
           ))}
         </AccessoriesWrapper>
-        <About>{car.about}</About>
-      </Content>
+        <About>
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+          {car.about}
+        </About>
+      </Animated.ScrollView>
 
       <Footer>
         <Button name="Selecionar Periodo" onPress={handleSelectRentalPeriod} />
