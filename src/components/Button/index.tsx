@@ -9,6 +9,7 @@ interface Props extends RectButtonProps {
   color?: string;
   isEnabled?: boolean;
   isLoading?: boolean;
+  light?: boolean;
 }
 
 export const Button: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const Button: React.FC<Props> = ({
   color,
   isEnabled = true,
   isLoading = false,
+  light = false,
   ...rest
 }) => {
   return (
@@ -27,7 +29,7 @@ export const Button: React.FC<Props> = ({
       }}
       {...rest}
     >
-      {isLoading ? <Load /> : <Title>{name}</Title>}
+      {isLoading ? <Load /> : <Title light={light}>{name}</Title>}
     </Container>
   );
 };

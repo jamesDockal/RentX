@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar } from "react-native";
+import { BackHandler, StatusBar, StyleSheet } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
+import { RectButton, PanGestureHandler } from "react-native-gesture-handler";
+
+const ButtonAnimated = Animated.createAnimatedComponent(RectButton);
 
 import {
   Container,
@@ -9,8 +17,8 @@ import {
   HeaderContainer,
   TotalCars,
   CarList,
-  MyCarsButton,
 } from "./styles";
+
 import Logo from "../../assets/logo.svg";
 import { RFValue } from "react-native-responsive-fontsize";
 import { CardCard } from "../../components/CardCard";
@@ -25,6 +33,31 @@ type Props = {};
 export const Home: React.FC<Props> = ({}) => {
   const [cars, setCars] = useState<Car[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const positionX = useSharedValue(0);
+  const positionY = useSharedValue(0);
+
+  const myCarsButtonStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: positionX.value,
+        },
+        {
+          translateY: positionY.value,
+        },
+      ],
+    };
+  });
+  const onGestureEvent = useAnimatedGestureHandler({
+    onStart() {},
+    onActive(event) {
+      console.log("event", event);
+      positionX.value = event.translationX;
+      positionY.value = event.translationY;
+    },
+    onEnd() {},
+  });
 
   const theme = useTheme();
   const navigation = useNavigation();
@@ -48,6 +81,12 @@ export const Home: React.FC<Props> = ({}) => {
     }
   }, []);
 
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      return true;
+    });
+  }, []);
+
   return (
     <Container>
       <StatusBar
@@ -59,7 +98,7 @@ export const Home: React.FC<Props> = ({}) => {
       <Header>
         <HeaderContainer>
           <Logo width={RFValue(108)} height={RFValue(12)} />
-          <TotalCars>Total de {cars.length} Carros</TotalCars>
+          {!isLoading && <TotalCars>Total de {cars.length} Carros</TotalCars>}
         </HeaderContainer>
       </Header>
 
@@ -74,9 +113,45 @@ export const Home: React.FC<Props> = ({}) => {
           )}
         />
       )}
-      <MyCarsButton onPress={handleOpenMyCars}>
-        <Ionicons name="ios-car-sport" size={32} color={theme.colors.shape} />
-      </MyCarsButton>
+
+      <PanGestureHandler onGestureEvent={onGestureEvent}>
+        <Animated.View
+          style={[
+            myCarsButtonStyle,
+            {
+              position: "absolute",
+              bottom: 13,
+              right: 22,
+            },
+          ]}
+        >
+          <ButtonAnimated onPress={handleOpenMyCars} style={styles.button}>
+            <Ionicons
+              name="ios-car-sport"
+              size={32}
+              color={theme.colors.shape}
+            />
+          </ButtonAnimated>
+        </Animated.View>
+      </PanGestureHandler>
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    height: 60,
+    width: 60,
+
+    borderRadius: 30,
+
+    justifyContent: "center",
+    alignItems: "center",
+
+    backgroundColor: "#dc1637",
+
+    position: "absolute",
+    bottom: 13,
+    right: 22,
+  },
+});

@@ -30,19 +30,3 @@ export const TotalCars = styled.Text`
 `;
 
 export const CarList = styled(FlatList as new () => FlatList<Car>)``;
-
-export const MyCarsButton = styled(RectButton)`
-  height: 60px;
-  width: 60px;
-
-  border-radius: 30px;
-
-  justify-content: center;
-  align-items: center;
-
-  background-color: ${({ theme }) => theme.colors.main};
-
-  position: absolute;
-  bottom: 13px;
-  right: 22px;
-`;

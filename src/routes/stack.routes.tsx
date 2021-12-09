@@ -9,6 +9,7 @@ import { SchedulingDetails } from "../pages/SchedulingDetails";
 import { SchedulingComplete } from "../pages/SchedulingComplete";
 import { MyCars } from "../pages/MyCars";
 import { Splash } from "../pages/Splash";
+import { SingIn } from "../pages/SingIn";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -18,10 +19,17 @@ export const StackRoutes: React.FC = ({}) => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Splash"
+      initialRouteName="SingIn"
     >
-      <Screen name="Splash" component={Splash} />
-      <Screen name="Home" component={Home} />
+      {/* <Screen name="Splash" component={Splash} /> */}
+      <Screen name="SingIn" component={SingIn} />
+      <Screen
+        name="Home"
+        component={Home}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
       <Screen name="CarDetails" component={CarDetails} />
       <Screen name="Scheduling" component={Scheduling} />
       <Screen name="SchedulingDetails" component={SchedulingDetails} />
